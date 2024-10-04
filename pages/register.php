@@ -32,6 +32,19 @@ if (empty($username) || empty($email) || empty($password)){
     }
 
 
+    if (empty($errors)){
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES(:username, :email, :password)");
+        if ($stmt->execute(['username' => $username, 'email'=>$email, 'password'=>$hashed_password])){
+            header("Location: login.php?success=1");
+            exit();
+        }
+        else{
+            $errors[] = "Something went wrong.Please retry";
+        }
+    }
+
+
 
 ?>
 
