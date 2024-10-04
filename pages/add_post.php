@@ -53,6 +53,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <body>
     <h2>Add new post</h2>
 
+    <?php if (!empty($errors)): ?>
+    <ul>
+        <?php foreach ($errors as $error): ?>
+            <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+
     <form action="add_post.php" method="POST">
     <label for="title">Title:</label>
     <input type="text" name="title" required><br>
