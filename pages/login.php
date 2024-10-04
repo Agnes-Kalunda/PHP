@@ -43,6 +43,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <body>
     <h2>Login</h2>
 
+    <?php if (!empty($errors)): ?>
+    <ul>
+        <?php foreach ($errors as $error): ?>
+            <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+
     <form>
         
     </form><form action="login.php" method="POST">
