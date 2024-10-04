@@ -1,8 +1,7 @@
 <?php
-include 'config.php'
 
+$message = include 'config.php';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +13,6 @@ include 'config.php'
 <body>
     <header>
         <h1>Hello!</h1>
-
         <nav>
             <a href="index.php">Home</a>
             <a href="pages/about.php">About</a>
@@ -23,12 +21,12 @@ include 'config.php'
 
     <main>
         <h2>Latest Content</h2>
-        <p>Ths is where your content will appear</p>
+        <p>This is where your content will appear</p>
+        <p><?php echo $message;  ?></p>
     </main>
 
     <footer>
-    <p>&copy; 2024 My CMS. All rights reserved.</p>
+        <p>&copy; 2024 My CMS. All rights reserved.</p>
     </footer>
-    
 </body>
 </html>

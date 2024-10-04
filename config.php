@@ -1,24 +1,23 @@
 <?php
-
-
 require 'vendor/autoload.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Load .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
-$host = getenv('DB_HOST');
-$dbname   = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$password = getenv('DB_PASSORD');
-
+$host = $_ENV['DB_HOST'] ?? '127.0.0.1'; 
+$dbname = $_ENV['DB_NAME'] ?? '';         
+$user = $_ENV['DB_USER'] ?? '';           
+$password = $_ENV['DB_PASSWORD'] ?? '';   
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-    // Set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    
+    return "Database connection successful!";
 } catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
+    
+    return 'Connection failed: ' . $e->getMessage();
 }
-?>
