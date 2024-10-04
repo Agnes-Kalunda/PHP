@@ -13,6 +13,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $confirm_password = trim($_POST['confirm_password']);
 }
 
+// validate form data
+if (empty($username) || empty($email) || empty($password)){
+    $errors[] = "All fields are required.";
+}
+
+    elseif($password !== $confirm_password){
+        $errors[] = "Passwords do not match";
+    }
+
+    else{
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE username = :username OR email = :email');
+        $stmt ->execute(['username' => $username,'email'=> $email]);
+
+        if($stmt->rowCount() >0){
+            $errors[] = "username or email already exists.";
+        }
+    }
+
 
 
 ?>
