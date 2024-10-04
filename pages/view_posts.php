@@ -32,7 +32,11 @@ $posts = $stmt->fetchAll();
     <?php endforeach; ?>
 <?php endif; ?>
 
-
+<?php if (isset($_SESSION['user_id'])): ?>
+    <p><a href="add_post.php">Add a New Post</a></p>
+<?php else: ?>
+    <p><a href="login.php">Login to Add a Post</a></p>
+<?php endif; ?>
 
 </body>
 </html>
