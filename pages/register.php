@@ -58,6 +58,14 @@ if (empty($username) || empty($email) || empty($password)){
 <body>
     <h2>Register</h2>
 
+    <?php if (!empty($errors)): ?>
+    <ul>
+        <?php foreach ($errors as $error): ?>
+            <li><?php echo $error; ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+
     <form action="register.php" method="POST">
     <label for="username">Username:</label>
     <input type="text" name="username" required><br>
@@ -73,6 +81,10 @@ if (empty($username) || empty($email) || empty($password)){
 
     <button type="submit">Register</button>
 </form>
+
+
+
+<p>Already have an account? <a href="login.php">Login here</a></p>
     
 </body>
 </html>
