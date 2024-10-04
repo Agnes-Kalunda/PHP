@@ -1,5 +1,10 @@
 <?php
-require '../config.php'
+require '../config.php';
+
+
+// initializing variables
+$username = $email = $password = $confirm_password= '';
+$errors =[];
 
 
 
@@ -13,6 +18,7 @@ require '../config.php'
     <title>Register</title>
 </head>
 <body>
+    <h2>Register</h2>
     
 </body>
 </html>
