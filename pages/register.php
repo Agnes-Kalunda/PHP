@@ -57,6 +57,22 @@ if (empty($username) || empty($email) || empty($password)){
 </head>
 <body>
     <h2>Register</h2>
+
+    <form action="register.php" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" name="username" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" required><br>
+
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" name="confirm_password" required><br>
+
+    <button type="submit">Register</button>
+</form>
     
 </body>
 </html>
