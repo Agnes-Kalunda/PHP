@@ -27,7 +27,7 @@ session_start();
 <body class="bg-gray-100 text-gray-800">
 
 <header class="bg-blue-600 text-white p-4">
-    <h1 class="text-3xl font-bold">Hello!</h1>
+
     <nav class="flex gap-4 mt-2">
         <a href="index.php" class="hover:text-yellow-300">Home</a>
         <a href="pages/about.php" class="hover:text-yellow-300">About</a>
