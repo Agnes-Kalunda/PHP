@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 </form>
 
 <a href="../index.php">View All Posts</a>
-<a href="my_posts.php">View My Posts</a>
+<a href="user_posts.php">My Posts</a>
 
 </body>
 </html>
