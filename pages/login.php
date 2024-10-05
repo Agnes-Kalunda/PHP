@@ -42,6 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 </head>
 <body>
     <h2>Login</h2>
+    
 
     <?php if (!empty($errors)): ?>
     <ul>

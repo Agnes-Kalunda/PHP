@@ -71,7 +71,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <button type="submit">Add Post</button>
 </form>
 
-<a href="view_posts.php">View Posts</a>
+<a href="../index.php">View All Posts</a>
+<a href="my_posts.php">View My Posts</a>
 
 </body>
 </html>
