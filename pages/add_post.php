@@ -2,45 +2,49 @@
 session_start();
 require '../config.php';
 
-// Redirect to login user not logged in
+// Redirect to login if user not logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
-$errors =[];
+$errors = [];
+$success_message = '';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
 
-    // validat data
-
-    if (empty($title) || empty($content)) {
-        $errors[] = 'Both title and content are required';
-}
-
-    if (empty($errors)){
-        $stmt = $pdo->prepare('INSERT INTO posts (title, content, author_id) VALUES (:title, :content, :author_id)');
-        if ($stmt->execute([
-            'title' => $title,
-            'content'=> $content,
-            'author_id'=> $_SESSION['user_id'],
-        ])){
-            header('Location:view_posts.php');
-            exit();
-        } else{
-            $errors[] = "Something went wrong. Please try again";
-
-        }
-
+    // Validate data
+    if (empty($title)) {
+        $errors[] = 'Title is required';
+    }
+    if (empty($content)) {
+        $errors[] = 'Content is required';
     }
 
+    if (empty($errors)) {
+        try {
+            $stmt = $pdo->prepare('INSERT INTO posts (title, content, author_id) VALUES (:title, :content, :author_id)');
+            $result = $stmt->execute([
+                'title' => $title,
+                'content' => $content,
+                'author_id' => $_SESSION['user_id'],
+            ]);
 
-
+            if ($result) {
+                $success_message = "Post added successfully!";
+                // Clear the form data
+                $title = $content = '';
+            } else {
+                $errors[] = "Failed to add the post. Please try again.";
+            }
+        } catch (PDOException $e) {
+            error_log('Error adding post: ' . $e->getMessage());
+            $errors[] = "An error occurred while adding the post. Please try again.";
+        }
+    }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -48,31 +52,52 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add new post</title>
+    <title>Add New Post</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <h2>Add new post</h2>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../index.php">Home</a></li>
+                <li><a href="user_posts.php">My Posts</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <?php if (!empty($errors)): ?>
-    <ul>
-        <?php foreach ($errors as $error): ?>
-            <li><?php echo $error; ?></li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+    <main>
+        <h2>Add New Post</h2>
 
-    <form action="add_post.php" method="POST">
-    <label for="title">Title:</label>
-    <input type="text" name="title" required><br>
-    
-    <label for="content">Content:</label>
-    <textarea name="content" rows="5" required></textarea><br>
-    
-    <button type="submit">Add Post</button>
-</form>
+        <?php if (!empty($errors)): ?>
+            <div class="error">
+                <ul>
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-<a href="../index.php">View All Posts</a>
-<a href="user_posts.php">My Posts</a>
+        <?php if ($success_message): ?>
+            <div class="success">
+                <?php echo htmlspecialchars($success_message); ?>
+            </div>
+        <?php endif; ?>
 
+        <form action="add_post.php" method="POST">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($title ?? ''); ?>" required>
+
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="5" required><?php echo htmlspecialchars($content ?? ''); ?></textarea>
+
+            <button type="submit">Add Post</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; <?php echo date('Y'); ?> My CMS. All rights reserved.</p>
+    </footer>
 </body>
 </html>
